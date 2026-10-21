@@ -1,26 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!--
-     https://material.io/develop/android/theming/dark
-    -->
 
     <!--
-     BaseActivity DayNight DarkActionBar theme.
-     https://github.com/material-components/material-components-android/blob/1.4.0/lib/java/com/google/android/material/theme/res/values/themes.xml#L27
+     BaseActivity DayNight DarkActionBar theme for Night mode using Material 3 Expressive.
     -->
-    <style name="Theme.BaseActivity.DayNight.DarkActionBar" parent="Theme.MaterialComponents">
-        <!-- Primary brand color. -->
+    <style name="Theme.BaseActivity.DayNight.DarkActionBar" parent="Theme.Material3.Dark">
+        <!-- Primary brand color & containers -->
         <item name="colorPrimary">@color/red_400</item>
-        <item name="colorPrimaryVariant">@color/red_800</item>
         <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/red_800</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
 
-        <!-- Secondary brand color. -->
+        <!-- Secondary brand color & containers -->
         <item name="colorSecondary">@color/grey_400</item>
-        <item name="colorSecondaryVariant">@color/grey_500</item>
         <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondaryContainer">@color/grey_500</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
+
+        <!-- Tertiary color roles -->
+        <item name="colorTertiary">@color/red_400</item>
+        <item name="colorOnTertiary">@color/black</item>
+
+        <!-- M3 Expressive Surface Containers -->
+        <item name="colorSurface">@color/design_dark_default_color_surface</item>
+        <item name="colorOnSurface">@color/design_dark_default_color_on_surface</item>
+        <item name="colorSurfaceVariant">@color/grey_500</item>
+        <item name="colorOnSurfaceVariant">@color/grey_400</item>
+        <item name="colorSurfaceContainer">@color/design_dark_default_color_surface</item>
+        <item name="colorSurfaceContainerHigh">@color/grey_500</item>
+        <item name="colorSurfaceContainerHighest">@color/grey_400</item>
+        <item name="colorSurfaceContainerLow">@color/black</item>
+        <item name="colorSurfaceContainerLowest">@color/black</item>
+
+        <item name="colorOutline">@color/grey_400</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="colorPrimaryDark" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryContainer</item>
 
         <!-- Text color. -->
         <item name="android:textColorLink">@color/blue_link_dark</item>
@@ -32,28 +47,24 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
-
-
-
     <!--
-      BaseDialog DayNight theme.
-      https://github.com/material-components/material-components-android/blob/1.4.0/lib/java/com/google/android/material/dialog/res/values/themes.xml#L70
+      BaseDialog DayNight theme using Material 3 Expressive.
      -->
-    <style name="ThemeOverlay.BaseDialog.DayNight" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="ThemeOverlay.BaseDialog.DayNight" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/red_400</item>
-        <item name="colorPrimaryVariant">@color/red_800</item>
         <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/red_800</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/grey_400</item>
-        <item name="colorSecondaryVariant">@color/grey_500</item>
         <item name="colorOnSecondary">@color/black</item>
 
-        <!-- Surface color. -->
+        <!-- Surface color & M3 Surface Containers. -->
         <item name="colorSurface">@color/design_dark_default_color_surface</item>
         <item name="colorOnSurface">@color/design_dark_default_color_on_surface</item>
+        <item name="colorSurfaceContainer">@color/design_dark_default_color_surface</item>
 
         <!-- Dialog title panel style. -->
         <item name="materialAlertDialogTitlePanelStyle">@style/BaseDialog.Title.Panel</item>
