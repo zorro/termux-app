@@ -182,16 +182,40 @@ public class ViewUtils {
      *                     and can be smaller than physical display size in multi-window mode.
      * @return Returns the display size as {@link Point}.
      */
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
     public static Point getDisplaySize( @NonNull Context context, boolean activitySize) {
         // android.view.WindowManager.getDefaultDisplay() and Display.getSize() are deprecated in
         // API 30 and give wrong values in API 30 for activitySize=false in multi-window
-        androidx.window.WindowManager windowManager = new androidx.window.WindowManager(context);
-        androidx.window.WindowMetrics windowMetrics;
-        if (activitySize)
-            windowMetrics = windowManager.getCurrentWindowMetrics();
-        else
-            windowMetrics = windowManager.getMaximumWindowMetrics();
-        return new Point(windowMetrics.getBounds().width(), windowMetrics.getBounds().height());
+        Point size = new Point();
+        Activity activity = getActivity(context);
+        if (activitySize && activity != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                android.view.WindowMetrics windowMetrics = activity.getWindowManager().getCurrentWindowMetrics();
+                android.graphics.Rect bounds = windowMetrics.getBounds();
+                size.set(bounds.width(), bounds.height());
+            } else {
+                activity.getWindowManager().getDefaultDisplay().getSize(size);
+            }
+        } else {
+            Context baseContext = context;
+            if (activity != null) {
+                baseContext = activity;
+            }
+            android.view.WindowManager wm = (android.view.WindowManager) baseContext.getSystemService(Context.WINDOW_SERVICE);
+            if (wm != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    android.view.WindowMetrics windowMetrics = wm.getMaximumWindowMetrics();
+                    android.graphics.Rect bounds = windowMetrics.getBounds();
+                    size.set(bounds.width(), bounds.height());
+                } else {
+                    wm.getDefaultDisplay().getRealSize(size);
+                }
+            } else {
+                size.set(context.getResources().getDisplayMetrics().widthPixels,
+                         context.getResources().getDisplayMetrics().heightPixels);
+            }
+        }
+        return size;
     }
 
     /** Convert {@link Rect} to {@link String}. */

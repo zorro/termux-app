@@ -25,16 +25,17 @@ public class TermuxBootstrap {
 
     /** Set {@link #TERMUX_APP_PACKAGE_VARIANT} and {@link #TERMUX_APP_PACKAGE_MANAGER} from {@code packageVariantName} passed. */
     public static void setTermuxPackageManagerAndVariant(@Nullable String packageVariantName) {
-        TERMUX_APP_PACKAGE_VARIANT = PackageVariant.variantOf(packageVariantName);
+        String normalizedVariantName = packageVariantName != null ? packageVariantName.replace('.', '-') : null;
+        TERMUX_APP_PACKAGE_VARIANT = PackageVariant.variantOf(normalizedVariantName);
         if (TERMUX_APP_PACKAGE_VARIANT == null) {
             throw new RuntimeException("Unsupported TERMUX_APP_PACKAGE_VARIANT \"" + packageVariantName + "\"");
         }
 
         Logger.logVerbose(LOG_TAG, "Set TERMUX_APP_PACKAGE_VARIANT to \"" + TERMUX_APP_PACKAGE_VARIANT + "\"");
 
-        // Set packageManagerName to substring before first dash "-" in packageVariantName
-        int index = packageVariantName.indexOf('-');
-        String packageManagerName = (index == -1) ? null : packageVariantName.substring(0, index);
+        // Set packageManagerName to substring before first dash "-" in normalizedVariantName
+        int index = normalizedVariantName.indexOf('-');
+        String packageManagerName = (index == -1) ? null : normalizedVariantName.substring(0, index);
         TERMUX_APP_PACKAGE_MANAGER = PackageManager.managerOf(packageManagerName);
         if (TERMUX_APP_PACKAGE_MANAGER == null) {
             throw new RuntimeException("Unsupported TERMUX_APP_PACKAGE_MANAGER \"" + packageManagerName + "\" with variant \"" + packageVariantName + "\"");
@@ -206,8 +207,9 @@ public class TermuxBootstrap {
         @Nullable
         public static PackageVariant variantOf(String name) {
             if (name == null || name.isEmpty()) return null;
+            String normalizedName = name.replace('.', '-');
             for (PackageVariant v : PackageVariant.values()) {
-                if (v.name.equals(name)) {
+                if (v.name.equalsIgnoreCase(normalizedName) || v.name.equalsIgnoreCase(name)) {
                     return v;
                 }
             }
